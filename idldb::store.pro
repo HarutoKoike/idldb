@@ -72,7 +72,7 @@ if count eq 0 then begin
 endif
 
 
-
+rec = (*(self.data))[idx]
 
 ;
 ;*--------- store data ----------*
@@ -81,8 +81,9 @@ endif
 ;
 idx    = idx[0]
 record = (*(self.data))[idx]
-record = *record
+record = *(record[0])
 ;
+print, record.keys()
 attr_exists = record.haskey(attribute)
 ;
 if ~attr_exists then $

@@ -9,6 +9,7 @@
 @idldb::get.pro
 @idldb::get_id.pro
 @idldb::show.pro
+@idldb::remove_attr.pro
 ;
 ;
 
@@ -32,6 +33,10 @@ self.metadata     = ptr_new(/allocate)
 self.write_mode   = 0  ; 0:overwrite, 1:not overwrite
 self.return_value = 0  ; return value for no data being stored
 self.identifier   = identifier
+;
+; warning 
+self.warning_statement['opening'] = '% Other process is opening' 
+
 
 
 return, 1
@@ -67,7 +72,7 @@ pro idldb::getproperty, file=file, description=description, $
                         is_connected=is_connected, $
                         t_connected=t_connected, $
                         return_value=return_value, $
-                        identifier=identifier
+                        identifier=identifier, worning_statment=worning_statment
 compile_opt idl2
 ;
 if arg_present(file)         then file         = self.file         
@@ -76,6 +81,8 @@ if arg_present(is_connected) then is_connected = self.is_connected
 if arg_present(t_connected)  then t_connected  = self.t_connected 
 if arg_present(return_value) then return_value = self.return_value 
 if arg_present(identifier)   then identifier   = self.identifier 
+;
+if arg_present(warning_statement) then warning_statement = self.warning_statement 
 end
 
 
@@ -136,19 +143,21 @@ compile_opt idl2
 
 
 
-void = {                       $
-        idldb,                 $
-        identifier:''         ,$
-        file: ''              ,$
-        description: ''       ,$
-        is_connected: 0b      ,$
-        t_connected: 0d       ,$
-        write_mode:''         ,$
-        return_value:0        ,$
-        id: ptr_new(),         $  
-        data: ptr_new(),       $
-        metadata: ptr_new(),   $
-        inherits idl_object    $
+void = {                             $
+        idldb,                       $
+        identifier:''               ,$
+        file: ''                    ,$
+        description: ''             ,$
+        warning_statement:hash()    ,$
+        opening, ''                 ,$
+        is_connected: 0b            ,$
+        t_connected: 0d             ,$
+        write_mode:''               ,$
+        return_value:0              ,$
+        id: ptr_new(),               $  
+        data: ptr_new(),             $
+        metadata: ptr_new(),         $
+        inherits idl_object          $
        }
 
 end

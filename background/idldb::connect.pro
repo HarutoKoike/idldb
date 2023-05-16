@@ -74,7 +74,7 @@ metadata['is_connecting'] = 1
 if ~isa(id) or ~isa(data) then begin
     save, metadata, filename=self.file, description=self.identifier
 endif else begin
-    save, id, data, metadata, filename=self.file, description=self.identifier
+    save, id, metadata, data, filename=self.file, description=self.identifier
 endelse
 
 

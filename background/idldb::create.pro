@@ -37,6 +37,7 @@ now  = systime(/seconds)
 metadata = hash('created', now, 'last_update', now, $
                 'is_connecting', 0)
 
+
         
 save, metadata, filename=self.file, description=self.identifier
 end
