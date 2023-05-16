@@ -42,7 +42,9 @@ if ~isa(data) then $
 ;
 ;*--------- if no data is stored yet  ----------*
 ;
-if n_elements(*(self.id)) ne 0 then goto, skip1
+idarr = self->get_id()
+;
+if n_elements(idarr) ne 0 then goto, skip1
 ;
 record       = hash(attribute, data)
 *(self.id)   = id
@@ -56,7 +58,6 @@ skip1:
 ;
 ;*--------- check ID exists  ----------*
 ;
-idarr = *(self.id)
 nd    = n_elements(idarr)
 idx   = where(strmatch(idarr, id, /fold_case), count) 
 ;
@@ -78,6 +79,7 @@ endif
 ;
 ; check attribute exists
 ;
+idx    = idx[0]
 record = (*(self.data))[idx]
 record = *record
 ;

@@ -27,10 +27,18 @@ print, ' '
 print, '-----------------------------------'
 print, '% metadata of "' + self.file + '"'
 print, '-----------------------------------'
-for i = 0, n_elements(keys) - 1 do begin
-    print, string(i, '(i5)') + ': ' + keys[i] + '  ', $
-           meta[keys[i]]
-endfor
+
+foreach key, keys do begin
+    if key eq 'created' then begin
+            print, key, ' : ', systime(elapsed=meta[key])
+            continue
+    endif
+    if key eq 'last_update' then begin
+            print, key, ' : ', systime(elapsed=meta[key])
+            continue
+    endif
+    print, key + ' : ', meta[key]
+endforeach
 
 
 end

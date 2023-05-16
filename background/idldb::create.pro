@@ -1,6 +1,6 @@
 ;===========================================================+
 ; ++ NAME ++
-pro idldb::create, only_create=only_create
+pro idldb::create
 ;
 ; ++ PURPOSE ++
 ;  -->
@@ -29,26 +29,14 @@ if file_test(self.file) then $
 
 
 ;
-;*---------   ----------*
+;*--------- create ----------*
 ;
-
 meta = self.metadata 
-desc = self.identifier
-now  = systime(/julian)
-
-metadata = hash('creaded', now, 'last_update', now, $
-                'is_connecting', 1)
-
+now  = systime(/seconds)
+;
+metadata = hash('created', now, 'last_update', now, $
+                'is_connecting', 0)
 
         
-;
-;*---------   ----------*
-;
-save, metadata, filename=filename, description=self.identifier
-
-if ~keyword_set(only_create) then begin
-    self.is_connected = 1
-    self.t_connected  = now
-    *(self.metadata)  = metadata
-endif
+save, metadata, filename=self.file, description=self.identifier
 end

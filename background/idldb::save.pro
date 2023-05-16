@@ -19,9 +19,19 @@ compile_opt idl2
 ;
 self->check_connected
 
-save, *(self.id), *(self.data), *(self.metadata), $
-      description=self.identifier, filename=self.file
+id       = *(self.id)
+data     = *(self.data)
+metadata = *(self.metadata)
 
-if keyword_set(close) then $
+;
+; date of last update 
+metadata['last_update'] = systime(/seconds)
+
+if keyword_set(close) then begin
     self.is_connected = 0
+    metadata['is_connecting'] = 0
+endif
+
+save, id, data, metadata, $
+      description=self.identifier, filename=self.file
 end

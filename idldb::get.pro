@@ -1,6 +1,6 @@
 ;===========================================================+
 ; ++ NAME ++
-function idldb::get, id0, attribute, get_index=get_index, pointer=pointer
+function idldb::get, id0, attribute, get_index=get_index, get_id=get_id, pointer=pointer
 ;
 ; ++ PURPOSE ++
 ;  -->
@@ -45,10 +45,9 @@ endif
 if size(id0, /type) eq 2 then begin
     idx = id0
 endif else begin
-    idx = self->idl
+    idx = self->conv_id2idx(id0)
 endelse
 
-stop
 ;
 if n_elements(idx) eq 0 then return, self.return_value
 
@@ -69,6 +68,7 @@ if count eq 0 then return, self.return_value
 ;
 ; index
 if arg_present(get_index) then get_index = idx[idx_attrexists]
+if arg_present(get_id)    then get_id    = idarr[idx[idx_attrexists]]
 
 
 
@@ -77,38 +77,35 @@ if arg_present(get_index) then get_index = idx[idx_attrexists]
 ;
 records = records[idx_attrexists]
 ;
-lam = 'rec:ptr_new( *(rec)["' + attribute + '"])'
-data    = records.map(lambda(lam))
+data = ptrarr(n_elements(records))
+for i = 0, n_elements(records) -1 do begin
+    dum     = *(records[i])
+    data[i] = ptr_new(dum[attribute]) 
+endfor
 ;
 if keyword_set(pointer) then begin 
     return, data
 endif
 
-if n_elements(data) eq 1 then return, *data
+if n_elements(data) eq 1 then return, *(data[0])
 
 
 
-lam1 = 'd:size(*d["' + attribute + '"], /type)' 
-lam2 = 'd:n_elements(*d["' + attribute + '"])' 
-print, lam1, lam2
-stop
-check_type     = data.map( lambda(lam1) )
-check_1element = data.map( lambda(lam2) )
+check_type     = data.map( lambda(d:size(*d, /type) ) )
+check_1element = data.map( lambda(d:n_elements(*d))  )
 
 dum1 = where(check_type eq check_type[0], count1)
 dum2 = where(check_1element eq 1, count2)
-
 nd   = n_elements(data)
 disc = (count1 eq nd) and (count2 eq nd)
-
 if ~disc then return, data
 
-d0  = (*(data[0]))[attribute]
+
+d0  = *(data[0])
 arr = make_array(nd, type=size(d0, /type))
 ;
 for i = 0, nd - 1 do begin
-    help, *(data[i])
-    arr[i] = (*(data[i]))[attribute]    
+    arr[i] = *(data[i])
 endfor
 
 

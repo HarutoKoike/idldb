@@ -8,6 +8,7 @@
 @idldb::store.pro
 @idldb::get.pro
 @idldb::get_id.pro
+@idldb::show.pro
 ;
 ;
 
@@ -137,7 +138,6 @@ compile_opt idl2
 
 void = {                       $
         idldb,                 $
-        version:0             ,$
         identifier:''         ,$
         file: ''              ,$
         description: ''       ,$

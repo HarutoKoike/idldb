@@ -16,7 +16,9 @@ function idldb::get_id, index=idx
 ; 
 ;===========================================================+
 compile_opt idl2
-
+;
+self->check_connected
+;
 id = *(self.id)
 
 if keyword_set(idx) then begin
