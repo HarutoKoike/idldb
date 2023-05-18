@@ -19,8 +19,18 @@ compile_opt idl2
 ;
 self->check_connected
 ;
+
+;
+;*---------  check valid ----------*
+;
 idarr = self.get_id()
 if n_elements(idarr) eq 0 then return
+;
+att = (self->default_record()).keys()
+att = att[0]
+dum = where(strmatch(attribute, att), count) 
+if count ne 0 then $
+    message, 'Attribute "' + att + '" cannot be removed.'
 
 
 ;
@@ -47,6 +57,7 @@ if n_elements(idx) eq 0 then return
 ;
 foreach i, idx do $
     (*((*(self.data))[i])).remove, attribute
+
 
 
 end

@@ -31,13 +31,12 @@ if file_test(self.file) then $
 ;
 ;*--------- create ----------*
 ;
-meta = self.metadata 
 now  = systime(/seconds)
 ;
 metadata = hash('created', now, 'last_update', now, $
-                'is_connecting', 0)
-
-
+                'is_connecting', 0, 'description', '')
         
+
+
 save, metadata, filename=self.file, description=self.identifier
 end

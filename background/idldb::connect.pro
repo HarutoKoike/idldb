@@ -1,6 +1,6 @@
 ;===========================================================+
 ; ++ NAME ++
-pro idldb::connect, quiet=quiet, force_connect=force_connect
+pro idldb::connect, quiet=quiet
 ;
 ; ++ PURPOSE ++
 ;  -->
@@ -46,7 +46,7 @@ if ~strmatch(desc, self.identifier) then $
 ;
 is_connecting = metadata['is_connecting']
 ;
-if is_connecting and ~keyword_set(force_connect) then begin
+if is_connecting and self.connecting_mode eq 0 then begin
     print, '% Other process is connecting database'
     print, '% Please wait until the process ends'
     self.is_connected = 0
@@ -63,20 +63,14 @@ self.t_connected  = systime(/seconds)
 
 if isa(id)   then *(self.id)   = id
 if isa(data) then *(self.data) = data
-;
-*(self.metadata) = metadata
+*self.metadata = metadata
 
 
 ;
 ;*---------- save  ----------*
 ;
 metadata['is_connecting'] = 1
-if ~isa(id) or ~isa(data) then begin
-    save, metadata, filename=self.file, description=self.identifier
-endif else begin
-    save, id, metadata, data, filename=self.file, description=self.identifier
-endelse
-
+save, metadata, filename=self.file, description=self.identifier
 
 
 if ~keyword_set(quiet) then $

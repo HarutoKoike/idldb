@@ -1,25 +1,28 @@
 
 fn = '~/testidldb.sav'
+;file_delete, fn
 
 db = idldb(file=fn)
 if ~file_test(fn) then db->create
-db->connect;, /force
 
+db.writing_mode=0
+db.connecting_mode=1
+
+db->connect
 
 db->store, 'a0001', 'att1', 1
-db->store, 'a0001', 'att8', 1
-db->store, 'a0002', 'att1', 4
-db->store, 'a0003', 'att2', 1234
-db->store, 'a0004', 'att1', 'fafa'
-db->store, 'a0002', 'att4', 'test'
-db->store, 'a0002', 'att4', 'test'
+db->store, 'a0001', 'att11', 1
+db->store, 'a0002', 'att2', 2
+db->store, 'a0003', 'att3', 3
+;db->store, 'a0003', 3, 4
 
-;db->show
+db->store, 'a0001', 'att1', 2
+;
+;
+db->print_metadata
+;
 
-
-db->remove_attr, 'a0001', ['att1', 'att8']
-
-db->save, /close
+;db->save, /close
 
 
 end

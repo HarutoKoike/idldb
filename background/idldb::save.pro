@@ -1,6 +1,6 @@
 ;===========================================================+
 ; ++ NAME ++
-pro idldb::save, close=close
+pro idldb::save, close=close, _extra=ex
 ;
 ; ++ PURPOSE ++
 ;  -->
@@ -32,6 +32,10 @@ if keyword_set(close) then begin
     metadata['is_connecting'] = 0
 endif
 
+
+
 save, id, data, metadata, $
-      description=self.identifier, filename=self.file
+      description=self.identifier, filename=self.file, $
+      _extra=ex
+
 end
