@@ -70,7 +70,7 @@ if isa(data) then *(self.data) = data
 ;*---------- save  ----------*
 ;
 metadata['is_connecting'] = 1
-save, metadata, filename=self.file, description=self.identifier
+save, id, data, metadata, filename=self.file, description=self.identifier
 
 
 if ~keyword_set(quiet) then $

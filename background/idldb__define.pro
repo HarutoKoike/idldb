@@ -6,6 +6,7 @@
 @idldb::create.pro
 @idldb::connect.pro
 @idldb::save.pro
+@idldb::close.pro
 @idldb::print_metadata.pro
 @idldb::store.pro
 @idldb::get.pro
@@ -37,7 +38,7 @@ self.data            = ptr_new(ptrarr(1), /allocate)
 self.metadata        = ptr_new(/allocate)
 self.is_connected    = 0b
 self.writing_mode    = 0  ; 0:overwrite, 1:not overwrite
-self.connecting_mode = 0  ; 0:overwrite, 1:not overwrite
+self.connecting_mode = 1  
 self.return_value    = 0  ; return value for no data being stored
 self.identifier      = identifier
 ;

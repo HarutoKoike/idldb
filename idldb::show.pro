@@ -1,6 +1,6 @@
 ;===========================================================+
 ; ++ NAME ++
-pro idldb::show
+pro idldb::show, idx
 ;
 ; ++ PURPOSE ++
 ;  -->
@@ -21,9 +21,14 @@ compile_opt idl2
 
 idarr = self->get_id()
 data  = *(self.data)
+;
+if isa(idx) then begin
+    idarr = idarr[idx]
+    data  = data[idx]
+endif
+;
 
 tab = '      '
-
 for i = 0, n_elements(idarr) - 1 do begin
     print, ''
     print, ''

@@ -28,7 +28,7 @@ metadata = *(self.metadata)
 metadata['last_update'] = systime(/seconds)
 
 if keyword_set(close) then begin
-    self.is_connected = 0
+    self.is_connected         = 0
     metadata['is_connecting'] = 0
 endif
 

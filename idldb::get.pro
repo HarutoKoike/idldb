@@ -86,11 +86,13 @@ endfor
 if keyword_set(pointer) then begin 
     return, data
 endif
-
+;
 if n_elements(data) eq 1 then return, *(data[0])
 
 
 
+;
+; return raw data
 check_type     = data.map( lambda(d:size(*d, /type) ) )
 check_1element = data.map( lambda(d:n_elements(*d))  )
 
@@ -112,3 +114,25 @@ endfor
 return, arr
 
 end
+
+
+
+
+
+;----------------------------------------------------------+
+; 
+;----------------------------------------------------------+
+function idldb::get_all, attribute, get_index=get_index, get_id=get_id, $
+                    pointer=pointer
+compile_opt idl2
+self->check_connected
+;
+
+id   = self->get_id()
+data = self->get(id, attribute, get_index=get_index, $
+                 get_id=get_id, pointer=pointer)
+
+return, data
+end
+
+
