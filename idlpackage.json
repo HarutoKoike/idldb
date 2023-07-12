@@ -1,0 +1,11 @@
+{
+  "Name": "idldb",
+  "Version": "v.0.1",
+  "Author": "Haruto Koike",
+  "Date": "Jul 2023",
+  "Dependencies": {
+      "Name": "IDL",
+      "Version": ">8.7"
+  }
+}
+ 
